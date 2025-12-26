@@ -9,8 +9,8 @@ generator client {
 // enough when changing adapters.
 // See https://www.prisma.io/docs/orm/reference/prisma-schema-reference#string for more information
 datasource db {
-  provider = "sqlite"
-  url      = "file:dev.sqlite"
+ provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Session {
@@ -31,4 +31,17 @@ model Session {
   emailVerified Boolean?  @default(false)
   refreshToken        String?
   refreshTokenExpires DateTime?
+}
+
+
+model userbirthday {
+  id            String   @id @default(uuid())
+  shop          String   @unique  // <--- YE HONA BAHUT ZAROORI HAI
+  birthdayPoint Int      @default(0)
+  anniversaryPoint Int      @default(0)
+  earnPercentage Int       @default(10)
+  minOrderTotal    Float    @default(10000.0) // Kitne amount par reward milega
+  fixedRewardPoint Int      @default(100)     // Kitne points milenge
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }
